@@ -5,20 +5,20 @@
   <artifactId>gentlething</artifactId>
   <packaging>pom</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Jielu Maven Webapp</name>
+  <name>Gentlething Maven Webapp</name>
   <url>http://maven.apache.org</url>
   
   <modules>
+  		<module>../gentlething-biz</module>
 		<module>../gentlething-web</module>
-		<module>../gentlething-biz</module>
-	</modules>
+  </modules>
 
-	<properties>
+  <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hibernate.version>3.6.2.Final</hibernate.version>
 		<spring.version>3.2.3.RELEASE</spring.version>
 		<cxf.version>2.7.3</cxf.version>
-	</properties>
+  </properties>
 	
   <dependencies>
     <dependency>
@@ -27,6 +27,130 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <!-- hibernate -->
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+		<version>${hibernate.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-validator</artifactId>
+		<version>3.1.0.GA</version>
+	</dependency>
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-entitymanager</artifactId>
+		<version>${hibernate.version}</version>
+	</dependency>
+	<!-- spring -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-core</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-beans</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-tx</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-orm</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-jms</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-aspects</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>javax.servlet-api</artifactId>
+		<version>3.1.0</version>
+	</dependency>
+
+	<dependency>
+		<groupId>javax.jms</groupId>
+		<artifactId>javax.jms-api</artifactId>
+		<version>2.0</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.activemq</groupId>
+		<artifactId>activemq-all</artifactId>
+		<version>5.8.0</version>
+	</dependency>
+	<dependency>
+		<groupId>c3p0</groupId>
+		<artifactId>c3p0</artifactId>
+		<version>0.9.1.2</version>
+	</dependency>
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.26</version>
+	</dependency>
+	<dependency>
+		<groupId>jstl</groupId>
+		<artifactId>jstl</artifactId>
+		<version>1.2</version>
+	</dependency>
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.13</version>
+	</dependency>
+	<dependency>
+		<groupId>javax.mail</groupId>
+		<artifactId>mail</artifactId>
+		<version>1.4.7</version>
+	</dependency>
+	<!-- 对excel97的支持 xls -->
+	<dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi</artifactId>
+		<version>3.9</version>
+	</dependency>
+	<!-- 对扩展的excel的支持 xlsx -->
+	<dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi-ooxml</artifactId>
+		<version>3.9</version>
+	</dependency>
+	<!-- json-lib -->
+	<dependency>
+	    <groupId>net.sf.json-lib</groupId>
+	    <artifactId>json-lib</artifactId>
+	    <version>2.4</version>
+	    <classifier>jdk15</classifier>
+	</dependency>
+	<dependency>
+		<groupId>org.freemarker</groupId>
+		<artifactId>freemarker</artifactId>
+		<version>2.3.20</version>
+	</dependency>
+		
   </dependencies>
   <build>
     <finalName>gentlething</finalName>

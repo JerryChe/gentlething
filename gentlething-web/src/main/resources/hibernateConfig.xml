@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd"
+	default-lazy-init="false">
+	<description>hibernate profile</description>
+
+	<context:component-scan base-package="com.gentlething.dao"/>
+	<bean id="propertyLoader" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:/application.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClassName}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="minPoolSize" value="1"></property>
+		<property name="maxPoolSize" value="25"></property>
+		<property name="initialPoolSize" value="3"></property>
+		<property name="acquireIncrement" value="1"></property>
+		<property name="maxIdleTime" value="600"></property>
+		<property name="idleConnectionTestPeriod" value="0"></property>
+		<property name="acquireRetryAttempts" value="30"></property>
+		<property name="acquireRetryDelay" value="1000"></property>
+		<property name="breakAfterAcquireFailure" value="true"></property>
+		<property name="checkoutTimeout" value="0"></property>
+		<property name="testConnectionOnCheckout" value="false"></property>
+		<property name="properties">
+			<props>
+				<prop key="user">${jdbc.username}</prop>
+				<prop key="password">${jdbc.password}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="namingStrategy">
+			<bean class="org.hibernate.cfg.ImprovedNamingStrategy" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hiberante.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.connection.release_mode">after_statement</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.orm.hibernate3.HibernateTransactionManager" id="transactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<aop:config>
+        <aop:advisor pointcut="execution(* com.gentlething.service.impl.*.*(..))" advice-ref="txadvice"/>
+    </aop:config>
+	
+	<tx:advice id="txadvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="save*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="add*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="update*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="modify*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="find*" propagation="SUPPORTS" />
+			<tx:method name="get*" propagation="SUPPORTS" />
+			<tx:method name="select*" propagation="SUPPORTS" />
+		</tx:attributes>
+	</tx:advice>
+    
+</beans>
